@@ -1,5 +1,5 @@
 package worker
 
 type Job interface {
-	Process()
+	Process() error
 }
