@@ -13,7 +13,7 @@ type Pool struct {
 func NewPool(poolSize int) Pool {
 	return Pool{
 		size:    poolSize,
-		jobChan: make(chan Job),
+		jobChan: make(chan Job, 100),
 		g:       &errgroup.Group{},
 	}
 }
@@ -36,7 +36,6 @@ func (p *Pool) Start() {
 }
 
 func (p *Pool) worker() error {
-
 	for job := range p.jobChan {
 		if err := job.Process(); err != nil {
 			return err
